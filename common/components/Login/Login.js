@@ -74,6 +74,7 @@ const Login = ({ navigation }) => {
     }
     else if (mobileNo.length > 10 || mobileNo.length < 10) {
       ToastAndroid.show('Invalid mobile no', ToastAndroid.SHORT);
+      setMobileNo("");
       return;
     }
 
@@ -90,6 +91,7 @@ const Login = ({ navigation }) => {
     login(mobileNo, pwd, (snapshot) => {
       if (snapshot.empty) {
         ToastAndroid.show('Invalid authentication', ToastAndroid.SHORT);
+        setUserPwd("");
         return;
       }
       snapshot.forEach(doc => {
