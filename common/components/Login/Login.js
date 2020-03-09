@@ -173,7 +173,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
           </View>
           <View style={styles.versionDetailContainer}>
-            <Text style={styles.versionDetail}>version 0.2.2</Text>
+            <Text style={styles.versionDetail}>version 0.2.3</Text>
           </View>
         </>);
       }

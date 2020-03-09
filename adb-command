@@ -4,3 +4,14 @@ export PATH=$ANDROID_HOME/tools:$PATH
 react-native run-android
 
 ./gradlew assembleRelease
+
+
+/// bundler errros
+To resolve try the following:
+
+Clear watchman watches: watchman watch-del-all.
+Delete the node_modules folder: rm -rf node_modules && npm install.
+Reset Metro Bundler cache: rm -rf /tmp/metro-bundler-cache-* or npm start -- --reset-cache.
+Remove haste cache: rm -rf /tmp/haste-map-react-native-packager-*.
+The files mentioned in step 3 and 4 may not exactly have the same name (e.g. metro-cache or haste-map-metro). 
+To make sure you delete the temp files, navigate to /tmp directory and delete anything with metro or haste in it, yourself.
