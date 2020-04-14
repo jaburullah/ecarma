@@ -2,23 +2,22 @@ import React from 'react';
 import {
   View,
   Text,
-  Picker,
   TextInput,
   StatusBar,
   Button,
   TouchableOpacity,
-  ToastAndroid, Keyboard, TouchableWithoutFeedback
+  Keyboard, TouchableWithoutFeedback, Platform
 } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import styles from './styles';
 import { DailyItems, WeeklyItems, MonthlyItems, OtherItems } from '../../../model/model';
 import { addTicket } from '../../../../api/ticket'
 import { AuthContext } from '../../../../store/context';
 
 import { createStackNavigator } from 'react-navigation-stack';
-import ManagerTicketView from '../View/ManagerTicketView';
+import { AlterWithSingleButton } from '../../common/EcarmaAlter';
 
 const CreateTicket = ({ navigation }) => {
   const screenProps = navigation.getScreenProps();
@@ -72,7 +71,7 @@ const CreateTicket = ({ navigation }) => {
   const [selectedPeriod, setSelectedPeriod] = React.useState('daily')
   const onChangePeriod = c => {
     let curPeriod = [...period];
-    curPeriod = curPeriod.map((o, i) => {
+    curPeriod = curPeriod.map((o) => {
       o.isChecked = false;
       if (c.name === o.name) {
         o.isChecked = true;
@@ -81,6 +80,7 @@ const CreateTicket = ({ navigation }) => {
     });
     setPeriod(curPeriod);
     setSelectedPeriod(c.name);
+    setCategory("");
     if (c.name === 'daily') {
       changeCategoryList(DailyItems);
       // setCategory(DailyItems[0].name);
@@ -97,7 +97,7 @@ const CreateTicket = ({ navigation }) => {
   };
 
   const getRadioButton = () => {
-    return period.map((o, i) => {
+    return period.map((o) => {
       return (
         <View key={o.name} style={styles.flex1}>
           <TouchableOpacity
@@ -114,6 +114,7 @@ const CreateTicket = ({ navigation }) => {
   };
 
   const updateCategory = v => {
+
     setCategory(v);
   };
 
@@ -139,37 +140,71 @@ const CreateTicket = ({ navigation }) => {
   };
 
   const onCreateTicket = () => {
-    onChangePeriod({ name: 'daily' });
-    setDescription('');
-    let f = categoryList.find((o) => {
-      if (category) {
-        if (o.name === category) {
-          return true;
-        }
+
+    const selectedCategory = categoryList.find(c => c.name === category);
+
+    if (!category) {
+      AlterWithSingleButton("Alert", "Select category", () => console.log("OK Pressed"));
+      return;
+    }
+
+
+    const newTicket = { title: selectedCategory.title, type: selectedPeriod, status: 'Open', name: selectedCategory.name, description, review: '', userID: model.getUserID(), createdDate: new Date(), modifiedDate: new Date(), apartmentID: screenProps.apartmentID }
+
+
+
+    addTicket(newTicket)
+    model.addTicket(newTicket);
+
+    AlterWithSingleButton("Alert", "Ticket created successfully", () => {
+      console.log(newTicket);
+
+      onChangePeriod({ name: 'daily' });
+      setDescription('');
+      const refreshCallBack = navigation.getParam('CB');
+      if (refreshCallBack) {
+        refreshCallBack();
+      }
+      if (navigation.toggleDrawer) {
+        navigation.navigate('Dashboard')
       }
       else {
-        if (o.name === categoryList[0].name) {
-          return true;
-        }
+        navigation.navigate('home')
       }
     });
 
-    const newTicket = { title: f.title, type: selectedPeriod, status: 'Open', name: category || categoryList[0].name, description, review: '', userID: model.getUserID(), createdDate: new Date(), modifiedDate: new Date(), apartmentID: screenProps.apartmentID }
-    addTicket(newTicket)
-    model.addTicket(newTicket);
-    ToastAndroid.show('Ticket created successfully', ToastAndroid.LONG);
-    const refreshCallBack = navigation.getParam('CB');
-    if (refreshCallBack) {
-      refreshCallBack();
-    }
-    if (navigation.toggleDrawer) {
-      navigation.navigate('Dashboard')
-    }
-    else {
-      navigation.navigate('home')
-    }
 
   };
+
+
+  const getRNS = React.useCallback(() => {
+
+    const dropDownItem = categoryList.map((o) => {
+      return { label: o.title, value: o.name }
+    });
+    const placeholder = {
+      label: 'Select Category',
+      value: null,
+      color: '#000',
+    }
+
+    return <RNPickerSelect style={{
+      inputIOS: {
+        fontSize: 20
+      },
+      inputAndroid: {
+        fontSize: 18,
+        color: '#000',
+      }
+    }}
+      Icon={() => <Icon name="ios-arrow-down" color={"#bdbdbd"} size={30} />}
+      value={category}
+      placeholder={placeholder}
+      onValueChange={updateCategory}
+      items={dropDownItem}
+    />
+  }, [categoryList, period, category])
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -182,19 +217,16 @@ const CreateTicket = ({ navigation }) => {
           <View style={[styles.radioButtonsContainer]}>
             {getRadioButton()}
           </View>
-          <View style={styles.rowStyle1}>
-            <Text style={styles.title}>Select Category</Text>
-            <Picker
-              selectedValue={category}
-              onValueChange={updateCategory}
-              underlineColorAndroid="black">
-              {categoryList.map((o, i) => {
-                return (
-                  <Picker.Item key={o.name} label={o.title} value={o.name} />
-                );
-              })}
-            </Picker>
-          </View>
+          {
+            Platform.OS === "ios" ? <View style={{ marginBottom: 20, marginTop: 30 }} >
+
+              {getRNS()}
+            </View> : <View style={{ marginBottom: 10, marginTop: 10 }} >
+
+                {getRNS()}
+              </View>
+          }
+
           <View style={styles.rowStyle4}>
             <Text style={[styles.title, styles.magrinBottom10]}>Description</Text>
             <TextInput

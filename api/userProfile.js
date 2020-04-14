@@ -5,7 +5,7 @@ const usersRef = db.collection('users');
 export const updateUserData = (updateUser, successCallBack, failCallBack) => {
     usersRef.where('mobileNo', '==', updateUser.mobileNo).get().then(data => {
         if (data.docs.length && data.docs[0].id !== updateUser.userID) { //if (data.docs.length && req.body.userID !== data.docs[0].id) {
-            // ToastAndroid.show("Mobile number already exists", ToastAndroid.SHORT);
+
             failCallBack("Mobile number already exists");
             throw "error: Mobile number already exists"
         }

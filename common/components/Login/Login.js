@@ -5,7 +5,6 @@ import {
   Text,
   Image,
   StatusBar,
-  ToastAndroid,
   AsyncStorage,
   TouchableWithoutFeedback,
   Keyboard
@@ -14,6 +13,7 @@ import styles from './styles';
 import { login } from '../../../api/login'
 import { AuthContext } from '../../../store/context'
 import { ACTION_LOGIN } from '../../constants'
+import { AlterWithSingleButton } from '../common/EcarmaAlter';
 
 const Login = ({ navigation }) => {
   const { globalState, model, dispatch } = React.useContext(AuthContext);
@@ -73,7 +73,7 @@ const Login = ({ navigation }) => {
       return;
     }
     else if (mobileNo.length > 10 || mobileNo.length < 10) {
-      ToastAndroid.show('Invalid mobile no', ToastAndroid.SHORT);
+      AlterWithSingleButton("Alter", 'Invalid mobile no', () => { });
       setMobileNo("");
       return;
     }
@@ -90,14 +90,14 @@ const Login = ({ navigation }) => {
   const fnLogin = (mobileNo, pwd) => {
     login(mobileNo, pwd, (snapshot) => {
       if (snapshot.empty) {
-        ToastAndroid.show('Invalid authentication', ToastAndroid.SHORT);
+        AlterWithSingleButton("Alter", 'Invalid authentication', () => { });
         setUserPwd("");
         return;
       }
       snapshot.forEach(doc => {
         let d = doc.data();
         if (d.password !== pwd) {
-          ToastAndroid.show('Invalid password', ToastAndroid.SHORT);
+          AlterWithSingleButton("Alter", 'Invalid password', () => { });
           setUserPwd("");
         }
         else {
@@ -173,7 +173,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
           </View>
           <View style={styles.versionDetailContainer}>
-            <Text style={styles.versionDetail}>version 0.2.3</Text>
+            <Text style={styles.versionDetail}>version 0.2.4</Text>
           </View>
         </>);
       }

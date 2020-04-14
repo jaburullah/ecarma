@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Picker, TouchableOpacity, Modal, TouchableHighlight, Alert, ToastAndroid, Button, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Button, ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,13 +7,21 @@ import Dialog, { DialogTitle, DialogContent } from 'react-native-popup-dialog';
 
 import { TransitionView } from "../TransitionView";
 
+import RNPickerSelect from 'react-native-picker-select';
+
 import styles from './styles';
+import { AlterWithSingleButton } from './EcarmaAlter';
 const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog }) => {
 
   const [status, changeStatus] = React.useState(data.status);
   const [review, changeReview] = React.useState(data.review);
   const [modalVisible, changeModalVisible] = React.useState(false);
   const [modalDesVisible, changeModalDesVisible] = React.useState(false);
+  const ticketStatuses = [
+    { key: 'open', label: 'Open', value: 'Open' },
+    { key: 'in_progress', label: 'In progress', value: 'In progress' },
+    { key: 'completed', label: 'Completed', value: 'Completed' }
+  ]
   const updateStatus = v => {
 
     changeStatus(v);
@@ -232,7 +240,7 @@ const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog
                 (<TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
                   onPress={() => {
                     if (review) {
-                      ToastAndroid.show('Feedback has given', ToastAndroid.SHORT);
+                      AlterWithSingleButton("Alter", 'Feedback has given', () => { });
                       return;
                     }
                     changeModalVisible(true)
@@ -253,6 +261,43 @@ const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog
     }
   }
 
+
+
+  const getRNS = React.useCallback(() => {
+    return <RNPickerSelect style={{
+      inputIOS: {
+        fontSize: 18
+      },
+      inputAndroid: {
+        fontSize: 18,
+        color: '#000',
+      }
+    }}
+
+      Icon={() => <Icon name="ios-arrow-down" color={"#bdbdbd"} size={20} />}
+      placeholder={{}}
+      value={status}
+      onValueChange={updateStatus}
+      items={ticketStatuses}
+
+    // doneText: PropTypes.string,
+    // onDonePress={(d) => {
+    //   console.log(d, "onDonePress");
+    // }}
+    // onUpArrow={(d) => {
+    //   console.log(d, "onUpArrow");
+    // }}
+    // onDownArrow={(d) => {
+    //   console.log(d, "onDownArrow");
+    // }}
+    // onClose={(d) => {
+    //   console.log(d, "onClose");
+    // }}
+    />
+  }, [status, ticketStatuses])
+
+
+
   return (
     <TransitionView index={index} style={styles.listParentContainer} animation="fadeInRight">
       <View style={styles.listContainer}>
@@ -261,16 +306,8 @@ const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog
         </View>
         <View style={styles.listContent}>
           <View style={styles.listStatusText}>
-            {(appModel.isSecretary() && <Text>{data.status}</Text>) || (data.status === 'Completed' ? <Text>{data.status}</Text> : (
-              <Picker
-                selectedValue={status}
-                onValueChange={updateStatus}
-                underlineColorAndroid="black">
-                <Picker.Item key={'open'} label={'Open'} value={'Open'} />
-                <Picker.Item key={'in_progress'} label={'In progress'} value={'In progress'} />
-                <Picker.Item key={'completed'} label={'Completed'} value={'Completed'} />
-              </Picker>
-            ))}
+            {(appModel.isSecretary() && <Text>{data.status}</Text>)}
+            {(appModel.isManager() && (data.status === 'Completed' ? <Text>{data.status}</Text> : getRNS()))}
           </View>
           <View style={styles.listSmileyParentContainer}>
             {getFeedBackTemplate()}

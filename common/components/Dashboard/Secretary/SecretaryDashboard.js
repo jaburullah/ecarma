@@ -104,6 +104,10 @@ const SecretaryNavigator = createStackNavigator({
       const menuClickEvent = () => {
         navigation.toggleDrawer();
       }
+
+      const addClickEvent = () => {
+        navigation.navigate('NewTicket');
+      }
       let burgerIcon = <Icon
         style={{ paddingLeft: 10 }}
         name="md-menu"
@@ -115,6 +119,13 @@ const SecretaryNavigator = createStackNavigator({
         title: '',
         drawerLabel: '',
         headerLeft: burgerIcon,
+        headerRight: <Icon
+          style={{ paddingRight: 10 }}
+          name="md-add"
+          size={30}
+          color="#fff"
+          onPress={addClickEvent}
+        />,
         headerStyle: {
           backgroundColor: '#482114',
           elevation: 0,

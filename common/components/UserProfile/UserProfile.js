@@ -4,7 +4,6 @@ import {
     Text,
     TextInput,
     Button,
-    ToastAndroid,
     AsyncStorage,
     ScrollView
 } from 'react-native';
@@ -16,6 +15,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Login from '../Login/Login';
+import { AlterWithSingleButton } from '../common/EcarmaAlter';
 // import { SecretaryDrawer } from '../Drawer/SecretaryDrawer';
 // import { ManagerDrawer } from '../Drawer/ManagerDrawer';
 
@@ -90,40 +90,41 @@ const UserProfile = ({ navigation }) => {
 
         const user = model.getUser();
         if (!state.mobileNo) {
-            ToastAndroid.show("Ender mobile no.", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Ender mobile no.', () => { });
         }
         else if (!state.oldPassword) {
-            ToastAndroid.show("Ender old password", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Ender old password', () => { });
         }
         else if (!state.newPassword) {
-            ToastAndroid.show("Ender new password", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Ender new password', () => { });
         }
         else if (!state.confirmPassword) {
-            ToastAndroid.show("Ender confirm password", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Ender confirm password', () => { });
         }
         else if (state.oldPassword.length > 4 || state.oldPassword.length < 4) {
-            ToastAndroid.show("Old password should have 4 numbers", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Old password should have 4 numbers', () => { });
         }
         else if (state.oldPassword !== user.password) {
-            ToastAndroid.show("You have entered wrong old password", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'You have entered wrong old password', () => { });
         }
         else if (state.newPassword.length > 4 || state.newPassword.length < 4) {
-            ToastAndroid.show("New password should have 4 numbers", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'New password should have 4 numbers', () => { });
+
         }
         else if (state.confirmPassword.length > 4 || state.confirmPassword.length < 4) {
-            ToastAndroid.show("Confirm password should have 4 numbers", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Confirm password should have 4 numbers', () => { });
         }
         else if (state.confirmPassword !== state.newPassword) {
-            ToastAndroid.show("Confirm and New password should match", ToastAndroid.SHORT)
+            AlterWithSingleButton("Alter", 'Confirm and New password should match', () => { });
         } else {
             const updateUser = { ...user }
             updateUser.password = state.newPassword;
             updateUser.mobileNo = state.mobileNo;
             _storeData(updateUser.mobileNo);
             updateUserData(updateUser, () => {
-                ToastAndroid.show("Updated successfully", ToastAndroid.SHORT);
+                AlterWithSingleButton("Alter", 'Updated successfully', () => { });
             }, (msg) => {
-                ToastAndroid.show(msg, ToastAndroid.SHORT);
+                AlterWithSingleButton("Alter", msg, () => { });
             });
         }
 

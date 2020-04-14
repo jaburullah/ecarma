@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:795647204718:android:eba749282020a31ee1757f",
+        "mobilesdk_app_id": "1:795647204718:android:dd7c15f130e63d38e1757f",
         "android_client_info": {
-          "package_name": "com.apartment"
+          "package_name": "com.ecarma"
         }
       },
       "oauth_client": [
@@ -30,6 +30,13 @@
             {
               "client_id": "795647204718-ul99dn5sjb41umapha7f7jfmoe5pul3q.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "795647204718-3bmfcgjcrl3a0an9jc3ss8rj6rv0rkik.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ecarma"
+              }
             }
           ]
         }
