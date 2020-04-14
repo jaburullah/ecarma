@@ -20,6 +20,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { AlterWithSingleButton } from '../../common/EcarmaAlter';
 
 const CreateTicket = ({ navigation }) => {
+  const isIOS = Platform.OS === "ios";
   const screenProps = navigation.getScreenProps();
 
   const { model } = React.useContext(AuthContext);
@@ -187,8 +188,14 @@ const CreateTicket = ({ navigation }) => {
       value: null,
       color: '#000',
     }
+    let props = isIOS ? {
+      Icon: () => {
+        return <Icon name="ios-arrow-down" color={"#bdbdbd"} size={20} />
+      }
+    } : {};
 
     return <RNPickerSelect style={{
+
       inputIOS: {
         fontSize: 20
       },
@@ -197,7 +204,7 @@ const CreateTicket = ({ navigation }) => {
         color: '#000',
       }
     }}
-      Icon={() => <Icon name="ios-arrow-down" color={"#bdbdbd"} size={30} />}
+      {...props}
       value={category}
       placeholder={placeholder}
       onValueChange={updateCategory}
@@ -218,7 +225,7 @@ const CreateTicket = ({ navigation }) => {
             {getRadioButton()}
           </View>
           {
-            Platform.OS === "ios" ? <View style={{ marginBottom: 20, marginTop: 30 }} >
+            isIOS ? <View style={{ marginBottom: 20, marginTop: 30 }} >
 
               {getRNS()}
             </View> : <View style={{ marginBottom: 10, marginTop: 10 }} >

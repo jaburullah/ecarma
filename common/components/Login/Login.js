@@ -119,61 +119,77 @@ const Login = ({ navigation }) => {
       if (!userPwd) {
         return (<>
           <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Mobile No."
-              keyboardType="numeric"
-              value={mobileNo}
-              onChangeText={(v) => setMobileNo(v)}
-              style={styles.txtMobileNo}
-            />
+            <View style={styles.flex3} ></View>
+            <View style={styles.txtMobileNoContainer} >
+              <TextInput
+                placeholder="Mobile No."
+                keyboardType="numeric"
+                value={mobileNo}
+                onChangeText={(v) => setMobileNo(v)}
+                style={styles.txtMobileNo}
+              />
+            </View>
+
+            <View style={styles.flex3} ></View>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput
-              ref={refFirstDigit}
-              maxLength={1}
-              keyboardType="numeric"
-              onChangeText={val => {
-                onPasswordChange('0', val);
-              }}
-              secureTextEntry={true}
-              style={styles.txtPassword}
-            />
-            <TextInput
-              ref={refSecondDigit}
-              maxLength={1}
-              keyboardType="numeric"
-              onChangeText={val => {
-                onPasswordChange('1', val);
-              }}
-              secureTextEntry={true}
-              style={styles.txtPassword}
-            />
-            <TextInput
-              ref={refThirdDigit}
-              maxLength={1}
-              keyboardType="numeric"
-              onChangeText={val => {
-                onPasswordChange('2', val);
-              }}
-              secureTextEntry={true}
-              style={styles.txtPassword}
-            />
-            <TextInput
-              ref={refFourthDigit}
-              maxLength={1}
-              keyboardType="numeric"
-              onChangeText={val => {
-                onPasswordChange('3', val);
-              }}
-              secureTextEntry={true}
-              style={styles.txtPassword}
-            />
+            <View style={styles.flex3} ></View>
+            <View style={styles.txtPasswordContainer} >
+              <TextInput
+                ref={refFirstDigit}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={val => {
+                  onPasswordChange('0', val);
+                }}
+                secureTextEntry={true}
+                style={styles.txtPassword}
+              />
+            </View>
+            <View style={styles.txtPasswordContainer} >
+              <TextInput
+                ref={refSecondDigit}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={val => {
+                  onPasswordChange('1', val);
+                }}
+                secureTextEntry={true}
+                style={styles.txtPassword}
+              />
+            </View>
+            <View style={styles.txtPasswordContainer} >
+              <TextInput
+                ref={refThirdDigit}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={val => {
+                  onPasswordChange('2', val);
+                }}
+                secureTextEntry={true}
+                style={styles.txtPassword}
+              />
+            </View>
+            <View style={styles.txtPasswordContainer} >
+              <TextInput
+                ref={refFourthDigit}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={val => {
+                  onPasswordChange('3', val);
+                }}
+                secureTextEntry={true}
+                style={styles.txtPassword}
+              />
+            </View>
+            <View style={styles.flex3} ></View>
+
           </View>
           <View style={styles.forgotPasswordContainer}>
             <Text style={styles.forgotPasswordText}>Forgot Password ?</Text>
           </View>
           <View style={styles.versionDetailContainer}>
-            <Text style={styles.versionDetail}>version 0.2.4</Text>
+            <Text style={styles.versionDetail}>version 0.2.5</Text>
           </View>
         </>);
       }

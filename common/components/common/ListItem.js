@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Button, ScrollView, Platform } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -12,7 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import styles from './styles';
 import { AlterWithSingleButton } from './EcarmaAlter';
 const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog }) => {
-
+  const isIOS = Platform.OS === "ios";
   const [status, changeStatus] = React.useState(data.status);
   const [review, changeReview] = React.useState(data.review);
   const [modalVisible, changeModalVisible] = React.useState(false);
@@ -264,6 +264,13 @@ const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog
 
 
   const getRNS = React.useCallback(() => {
+    let props = isIOS ? {
+      Icon: () => {
+        return <Icon name="ios-arrow-down" color={"#bdbdbd"} size={20} />
+      }
+    } : {};
+
+
     return <RNPickerSelect style={{
       inputIOS: {
         fontSize: 18
@@ -273,8 +280,7 @@ const ListItem = ({ appModel, data, updateCallBack, index, showDescriptionDialog
         color: '#000',
       }
     }}
-
-      Icon={() => <Icon name="ios-arrow-down" color={"#bdbdbd"} size={20} />}
+      {...props}
       placeholder={{}}
       value={status}
       onValueChange={updateStatus}

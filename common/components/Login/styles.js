@@ -13,25 +13,35 @@ export default StyleSheet.create({
     flex: 2,
   },
   inputContainer: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 20
+  },
+  flex3: {
+    flex: 3
+  },
+  txtMobileNoContainer: {
+    flex: 6, padding: 5,
   },
   txtMobileNo: {
+    padding: 5,
     fontSize: 20,
     borderColor: 'gray',
     borderWidth: 1,
-    marginLeft: 20,
-    padding: 5,
-    width: 200,
-    marginVertical: 25,
+  },
+  txtPasswordContainer: {
+    padding: 5, flex: 1
   },
   txtPassword: {
     fontSize: 20,
     borderColor: 'gray',
     borderWidth: 1,
-    marginLeft: 20,
+    textAlign: "center",
+    // marginLeft: 20,
     padding: 5,
-    marginVertical: 25,
+    // marginVertical: 25,
   },
   forgotPasswordContainer: {
     alignItems: 'center',
