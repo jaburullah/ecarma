@@ -2,7 +2,7 @@
 import React from 'react';
 import { dashboardData } from '../../../api/dashboard'
 import { AuthContext } from '../../../store/context';
-import { ACTION_APARTMENT_TICKETS, ACTION_APARTMENT_DAILY_TASKS, ACTION_APARTMENT_WEEKLY_TASKS, ACTION_APARTMENT_MONTHLY_TASKS } from '../../constants';
+import { ACTION_APARTMENT_TICKETS, ACTION_APARTMENT_DAILY_TASKS, ACTION_APARTMENT_WEEKLY_TASKS, ACTION_APARTMENT_FORTNITE_TASKS } from '../../constants';
 function numLengthCheck(num) {
     num = num + '';
     num = num.length >= 2 ? num : '0' + num;
@@ -60,9 +60,9 @@ function separateTickets(data, type, dispatch) {
             payload: d
         });
     }
-    else if (type === 'monthly') {
+    else if (type === 'fortNite') {
         dispatch({
-            type: ACTION_APARTMENT_MONTHLY_TASKS,
+            type: ACTION_APARTMENT_FORTNITE_TASKS,
             payload: d
         });
     }
@@ -127,7 +127,7 @@ const Dashboard = (C) => {
                     }
                 }
 
-                const titles = ['tickets', 'daily', 'weekly', 'monthly']
+                const titles = ['tickets', 'daily', 'weekly', 'fortNite']
                 let dd = d.map((d, i) => {
                     return separateTickets(d, titles[i], dispatch);
                 });

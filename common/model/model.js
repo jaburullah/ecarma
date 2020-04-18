@@ -84,7 +84,40 @@ export const WeeklyItems = [
   },
 ];
 
-export const MonthlyItems = [
+// export const FortNiteItems = [
+//   {
+//     name: 'buildingDusting',
+//     title: 'Building Dusting',
+//     status: 'Open',
+//     review: null,
+//     apartmentID: 1,
+//     userID: 1,
+//     createDate: new Date(),
+//     modifiedDate: new Date(),
+//   },
+//   {
+//     name: 'floorScrubbing',
+//     title: 'Floor Scrubbing',
+//     status: 'Completed',
+//     review: 'sad',
+//     apartmentID: 1,
+//     userID: 1,
+//     createDate: new Date(),
+//     modifiedDate: new Date(),
+//   },
+//   {
+//     name: 'stpRoomCleaning',
+//     title: 'STP Room Cleaning',
+//     status: 'Open',
+//     review: null,
+//     apartmentID: 1,
+//     userID: 1,
+//     createDate: new Date(),
+//     modifiedDate: new Date(),
+//   },
+// ];
+
+export const FortNiteItems = [
   {
     name: 'buildingDusting',
     title: 'Building Dusting',
@@ -135,8 +168,8 @@ export const ManagerData = [
     sadPercent: '10',
   },
   {
-    name: 'monthly',
-    title: 'MONTHLY',
+    name: 'fortNite',
+    title: 'FORTNITE',
     ticketCount: '12',
     happyPercent: '82',
     normalPercent: '15',
@@ -154,105 +187,6 @@ export const OtherItems = [{
   createDate: new Date(),
   modifiedDate: new Date(),
 }]
-
-// export const model = m => {
-//   let _model = m;
-//   const session = {
-//     reInitilize: model => {
-//       _model = model;
-//     },
-//     isSecretary: () => {
-//       return _model.roles.indexOf('secretary') >= 0;
-//     },
-//     isManager: () => {
-//       return _model.roles.indexOf('manager') >= 0;
-//     },
-//     login: u => {
-//       _model = u;
-//     },
-//     logout: () => {
-//       _model = null;
-//     },
-
-//     getUserID: () => {
-//       return _model.id;
-//     },
-
-//     getUser() {
-//       return {
-//         userID: _model.id,
-//         password: _model.password,
-//         roles: _model.roles,
-//         mobileNo: _model.mobileNo,
-//         apartmentID: _model.apartmentID,
-//       }
-//     },
-//     getApartmentsID: () => {
-//       return _model.apartmentID;
-//     },
-//     setApartments: (d) => {
-//       _model.apartments = d;
-//     },
-//     getApartments: (d) => {
-//       return _model.apartments;
-//     },
-//     setApartmentsTaskInfo: (d) => {
-//       _model.apartmentsInfo = d;
-//     },
-
-//     getApartmentsTaskInfo: () => _model.apartmentsInfo,
-
-//     setApartmentTickets: (d) => {
-//       _model.apartmentTickets = d;
-//     },
-//     getApartmentTickets: (apartmentID) => {
-//       return _model.apartmentTickets.filter(d => d.apartmentID === apartmentID);
-//     },
-
-//     setApartmentDailyTasks: (d) => {
-//       _model.apartmentDailyTasks = d;
-//       _model.dailyTasks = {};
-//     },
-//     getApartmentDailyTasks: (apartmentID) => {
-//       return _model.apartmentDailyTasks.filter(d => d.apartmentID === apartmentID);
-//     },
-
-//     setApartmentWeeklyTasks: (d) => {
-//       _model.apartmentWeeklyTasks = d;
-//     },
-//     getApartmentWeeklyTasks: (apartmentID) => {
-//       return _model.apartmentWeeklyTasks.filter(d => d.apartmentID === apartmentID);
-//     },
-
-//     setApartmentMonthlyTasks: (d) => {
-//       _model.apartmentMonthlyTasks = d;
-//     },
-//     getApartmentMonthlyTasks: (apartmentID) => {
-//       return _model.apartmentMonthlyTasks.filter(d => d.apartmentID === apartmentID);
-//     },
-
-//     addTicket: (d) => {
-//       _model.apartmentTickets.unshift(d);
-//       this.refresh = true;
-//     },
-
-//     updateDailyTasks: (d) => {
-
-//     },
-//     updateWeeklyTasks: (d) => {
-
-//     },
-//     updateMonthlyTasks: (d) => {
-
-//     },
-//     updateTickets: (d) => {
-
-//     }
-
-
-//   };
-//   return session;
-// };
 
 
 export const appModel = (state) => {
@@ -274,9 +208,9 @@ export const appModel = (state) => {
         apartmentID: user.apartmentID,
       }
     },
-    getApartmentsID: () => {
-      return state.apartmentID;
-    },
+    // getApartmentsID: () => {
+    //   return state.apartmentID;
+    // },
     setApartments: (d) => {
       state.apartments = d;
     },
@@ -291,7 +225,19 @@ export const appModel = (state) => {
     //     _model.apartmentsInfo = d;
     // },
 
-    getApartmentsTaskInfo: () => state.apartmentsInfo,
+    getApartmentInfoById: (id) => state.apartmentsInfo[id],
+    getApartmentTasksById: (id) => {
+      const apartment = state.apartmentsInfo[id];
+
+      return {
+        dailyTasks: apartment.dailyTasks,
+        weeklyTasks: apartment.weeklyTasks,
+        fortNiteTasks: apartment.fortNiteTasks,
+        otherTasks: apartment.otherTasks
+      };
+
+    },
+    getApartmentsInfo: () => state.apartmentsInfo,
 
     // setApartmentTickets: (d) => {
     //     _model.apartmentTickets = d;
@@ -304,6 +250,9 @@ export const appModel = (state) => {
       return state.user.roles.indexOf('manager') >= 0;
     },
     getApartmentsID: () => {
+      if (state.user.roles.indexOf('secretary') >= 0) {
+        return [state.user.apartmentID[0]];
+      }
       return state.user.apartmentID;
     },
 
@@ -316,8 +265,8 @@ export const appModel = (state) => {
     getApartmentWeeklyTasks: (apartmentID) => {
       return state.apartmentWeeklyTasks.filter(d => d.apartmentID === apartmentID);
     },
-    getApartmentMonthlyTasks: (apartmentID) => {
-      return state.apartmentMonthlyTasks.filter(d => d.apartmentID === apartmentID);
+    getApartmentFortNiteTasks: (apartmentID) => {
+      return state.apartmentFortNiteTasks.filter(d => d.apartmentID === apartmentID);
     },
     addTicket: (d) => {
       state.apartmentTickets.unshift(d);

@@ -100,8 +100,8 @@ const InfiniteScroll = (C, options = { limit: 10, collection: null }) => {
             if (options.collection === 'dailyTasks') {
                 cachedData = model.getApartmentDailyTasks(screenProps.apartmentID);
             }
-            else if (options.collection === 'monthlyTasks') {
-                cachedData = model.getApartmentMonthlyTasks(screenProps.apartmentID);
+            else if (options.collection === 'fortNiteTasks') {
+                cachedData = model.getApartmentFortNiteTasks(screenProps.apartmentID);
             }
             else if (options.collection === 'weeklyTasks') {
                 cachedData = model.getApartmentWeeklyTasks(screenProps.apartmentID);

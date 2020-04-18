@@ -4,10 +4,10 @@ import { View, Text, Button, FlatList } from 'react-native';
 import styles from './styles';
 import ListItem from '../../../common/ListItem';
 import InfiniteScroll from '../../../common/InfiniteScroll';
-import { updateMonthlyTasks } from '../../../../../api/monthlyTasks'
+import { updateFortNiteTasks } from '../../../../../api/fortNiteTasks'
 import { AuthContext } from '../../../../../store/context';
 
-const Monthly = ({ navigation, data, isLoading, isRefreshing, retrieveMore, CB }) => {
+const FortNite = ({ navigation, data, isLoading, isRefreshing, retrieveMore, CB }) => {
   const { model } = React.useContext(AuthContext);
 
   const getView = () => {
@@ -35,7 +35,7 @@ const Monthly = ({ navigation, data, isLoading, isRefreshing, retrieveMore, CB }
               index={index}
               appModel={model}
               data={item}
-              updateCallBack={updateMonthlyTasks}
+              updateCallBack={updateFortNiteTasks}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -68,5 +68,5 @@ const Monthly = ({ navigation, data, isLoading, isRefreshing, retrieveMore, CB }
   );
 };
 
-export default InfiniteScroll(Monthly, { limit: 10, collection: 'monthlyTasks' });
+export default InfiniteScroll(FortNite, { limit: 10, collection: 'fortNiteTasks' });
 

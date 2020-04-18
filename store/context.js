@@ -9,7 +9,7 @@ const initialState = {
     apartmentTickets: null,
     apartmentDailyTasks: null,
     apartmentWeeklyTasks: null,
-    apartmentMonthlyTasks: null,
+    apartmentFortNiteTasks: null,
 }
 
 

@@ -9,7 +9,7 @@ import styles from './styles';
 
 import DailyTask from '../DailyTask/DailyTask';
 import WeeklyTask from '../WeeklyTask/WeeklyTask';
-import MonthlyTask from '../MonthlyTask/MonthlyTask';
+import FortNiteTask from '../FortNiteTask/FortNiteTask';
 import ManagerApartmentInfo from '../ManagerApartmentInfo';
 import { AuthContext } from '../../../../../store/context';
 
@@ -21,7 +21,7 @@ const Nav = ({ navigation }) => {
     {
       daily: (props) => (<DailyTask {...props} />),
       weekly: (props) => (<WeeklyTask {...props} />),
-      monthly: (props) => (<MonthlyTask {...props} />),
+      fortNite: (props) => (<FortNiteTask {...props} />),
     },
     {
       initialRouteName: navigation.getParam('tabName'),

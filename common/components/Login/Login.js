@@ -10,7 +10,7 @@ import {
   Keyboard
 } from 'react-native';
 import styles from './styles';
-import { login } from '../../../api/login'
+import { login, getUserApartmentInfo } from '../../../api/login'
 import { AuthContext } from '../../../store/context'
 import { ACTION_LOGIN } from '../../constants'
 import { AlterWithSingleButton } from '../common/EcarmaAlter';
@@ -102,8 +102,9 @@ const Login = ({ navigation }) => {
         }
         else {
           d.id = doc.id;
-          dispatch({ type: ACTION_LOGIN, payload: d })
-
+          getUserApartmentInfo(d, (data) => {
+            dispatch({ type: ACTION_LOGIN, payload: { user: d, apartmentsInfo: data } })
+          })
         }
       });
     }

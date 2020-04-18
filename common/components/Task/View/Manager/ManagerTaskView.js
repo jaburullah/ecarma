@@ -6,7 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import DailyTask from '../DailyTask/DailyTask';
 import WeeklyTask from '../WeeklyTask/WeeklyTask';
-import MonthlyTask from '../MonthlyTask/MonthlyTask';
+import FortNiteTask from '../FortNiteTask/FortNiteTask';
 import CreateTicket from '../../../Ticket/Create/CreateTicket';
 import ManagerApartmentInfo from '../ManagerApartmentInfo';
 import { AuthContext } from '../../../../../store/context';
@@ -20,7 +20,7 @@ const ManagerTaskView = ({ navigation }) => {
     {
       daily: (props) => (<DailyTask {...props} />),
       weekly: (props) => (<WeeklyTask {...props} />),
-      monthly: (props) => (<MonthlyTask {...props} />)
+      fortNite: (props) => (<FortNiteTask {...props} />)
     },
     {
       initialRouteName: navigation.getParam('tabName'),

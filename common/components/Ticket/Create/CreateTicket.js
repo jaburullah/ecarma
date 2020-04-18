@@ -12,7 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import { DailyItems, WeeklyItems, MonthlyItems, OtherItems } from '../../../model/model';
+import { DailyItems, WeeklyItems, FortNiteItems, OtherItems } from '../../../model/model';
 import { addTicket } from '../../../../api/ticket'
 import { AuthContext } from '../../../../store/context';
 
@@ -29,7 +29,8 @@ const CreateTicket = ({ navigation }) => {
     screenProps.apartmentID = "" + model.getUser().apartmentID[0];
   }
 
-
+  const { dailyTasks, weeklyTasks, fortNiteTasks, otherTasks } = model.getApartmentTasksById(screenProps.apartmentID);
+  // console.log(dailyTasks, weeklyTasks, fortNiteTasks, otherTasks)
   const options = {
     title: 'Select Avatar',
     takePhotoButtonTitle: 'Take a photo',
@@ -43,7 +44,7 @@ const CreateTicket = ({ navigation }) => {
   };
   const [category, setCategory] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [categoryList, changeCategoryList] = React.useState(DailyItems);
+  const [categoryList, changeCategoryList] = React.useState(dailyTasks);
   const [period, setPeriod] = React.useState([
     {
       name: 'daily',
@@ -58,8 +59,8 @@ const CreateTicket = ({ navigation }) => {
     },
 
     {
-      name: 'monthly',
-      label: 'Monthly',
+      name: 'fortNite',
+      label: 'Fortnite',
       isChecked: false,
     },
 
@@ -83,17 +84,17 @@ const CreateTicket = ({ navigation }) => {
     setSelectedPeriod(c.name);
     setCategory("");
     if (c.name === 'daily') {
-      changeCategoryList(DailyItems);
+      changeCategoryList(dailyTasks);
       // setCategory(DailyItems[0].name);
     } else if (c.name === 'weekly') {
-      changeCategoryList(WeeklyItems);
+      changeCategoryList(weeklyTasks);
       // setCategory(WeeklyItems[0].name);
-    } else if (c.name === 'monthly') {
-      changeCategoryList(MonthlyItems);
-      // setCategory(MonthlyItems[0].name);
+    } else if (c.name === 'fortNite') {
+      changeCategoryList(fortNiteTasks);
+      // setCategory(FortNiteItems[0].name);
     }
     else {
-      changeCategoryList(OtherItems);
+      changeCategoryList(otherTasks);
     }
   };
 
