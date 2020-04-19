@@ -5,6 +5,7 @@ react-native run-android
 react-native run-ios --simulator="iPhone 11"
 
 ./gradlew assembleRelease
+./gradlew bundleRelease
 
 
 /// bundler errros
